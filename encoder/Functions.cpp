@@ -1,108 +1,15 @@
-﻿#include <fstream>
-#include <iostream>
-#include <string>
-#include <cstdlib>
 #include <random>
-#include <Windows.h>
+#include <string>
+#include "Functions.hpp"
 
 using namespace std;
-string alg(string &a);
-string algReverse(string &a);
-string base64_decode(string const& encoded_string);
-static inline bool is_base64(unsigned char c);
-string base64_encode(string const& str_to_encode);
-int getRandom(int min, int max);
 
 const std::string base64_chars =
 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 "abcdefghijklmnopqrstuvwxyz"
 "0123456789+/";
 
-int main()
-{
-    //добавить base64, вставку рандомного знака вместо a или b
-
-    //setlocale(LC_ALL, "Russian");
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
-    string str, fileOutput, logAll;
-    int mode, algReps;
-    cout << "Enter string: ";
-    std::getline(std::cin, str);
-    cout << "Enter mode (1-encode, 2-decode): ";
-    cin >> mode;
-    cout << "Enter the number of algorithm repetitions: ";
-    cin >> algReps;
-    cout << "Output to file? y/n: ";
-    cin >> fileOutput;
-    cout << "Log all? y/n: ";
-    cin >> logAll;
-    if (logAll[0] == 'y')
-    {
-        if (fileOutput[0] == 'y')
-        {
-            ofstream output;
-            output.open("output.txt");
-            for (int i = 0; i < algReps; i++) {
-                if (mode == 1) {
-                    output << i + 1 << ". " << alg(str) << endl;
-                }
-                else if (mode == 2) {
-                    output << i + 1 << ". " << algReverse(str) << endl;
-                }
-            }
-            cout << "Done!" << endl;
-            output.close();
-        }
-        else if (fileOutput[0] == 'n')
-        {
-            for (int i = 0; i < algReps; i++) {
-                if (mode == 1) {
-                    cout << i + 1 << ". " << alg(str) << endl;
-                }
-                else if (mode == 2) {
-                    cout << i + 1 << ". " << algReverse(str) << endl;
-                }
-            };
-        };
-    }
-    else if (logAll[0] == 'n')
-    {
-        if (fileOutput[0] == 'y')
-        {
-            ofstream output;
-            output.open("output.txt");
-            for (int i = 0; i < algReps; i++) {
-                if (mode == 1) {
-                    alg(str);
-                }
-                else if (mode == 2) {
-                    algReverse(str);
-                }
-            }
-            output << str << endl << algReps << " repetitions";
-            cout << "Done!" << endl;
-            output.close();
-        }
-        else if (fileOutput[0] == 'n')
-        {
-            for (int i = 0; i < algReps; i++) {
-                if (mode == 1) {
-                    alg(str);
-                }
-                else if (mode == 2) {
-                    algReverse(str);
-                }
-            };
-            cout << str << endl << algReps << " repetitions\n";
-
-        };
-    };
-    system("pause");
-    return 0;
-}
-
-string alg(string &str) {
+string alg(string& str) {
     str = base64_encode(str);
     int size = str.size();
     int min = 33, max = 126;
@@ -126,7 +33,7 @@ string alg(string &str) {
     return str;
 }
 
-string algReverse(string &str) {
+string algReverse(string& str) {
     int size = str.size();
 
     for (int i = 0; i <= size; i++) {
@@ -150,15 +57,15 @@ string algReverse(string &str) {
 }
 
 int getRandom(int min, int max) {
-    std::random_device rd; // obtain a random number from hardware
-    std::mt19937 gen(rd()); // seed the generator
-    std::uniform_int_distribution<> distr(min, max); // define the range
+    random_device rd; // obtain a random number from hardware
+    mt19937 gen(rd()); // seed the generator
+    uniform_int_distribution<> distr(min, max); // define the range
 
     return distr(gen); // generate numbers
 }
 
-std::string base64_encode(std::string const& str_to_encode) {
-    std::string ret;
+string base64_encode(string const& str_to_encode) {
+    string ret;
     int i = 0;
     int j = 0;
     unsigned char char_array_3[3];
@@ -206,13 +113,13 @@ static inline bool is_base64(unsigned char c) {
     return (isalnum(c) || (c == '+') || (c == '/'));
 }
 
-std::string base64_decode(std::string const& encoded_string) {
+string base64_decode(string const& encoded_string) {
     int in_len = encoded_string.size();
     int i = 0;
     int j = 0;
     int in_ = 0;
     unsigned char char_array_4[4], char_array_3[3];
-    std::string ret;
+    string ret;
 
     while (in_len-- && (encoded_string[in_] != '=') && is_base64(encoded_string[in_])) {
         char_array_4[i++] = encoded_string[in_]; in_++;
