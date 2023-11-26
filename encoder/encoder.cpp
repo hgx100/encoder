@@ -20,9 +20,6 @@ const std::string base64_chars =
 
 int main()
 {
-    //добавить base64, вставку рандомного знака вместо a или b
-
-    //setlocale(LC_ALL, "Russian");
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
     string str, fileOutput, logAll;
