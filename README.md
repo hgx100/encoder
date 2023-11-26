@@ -9,7 +9,7 @@ The program prompts the user to enter a string, the encoding mode (1 for encodin
 ## Encoding Algorithm (alg function)
 
 ### 1. Base64 Encoding
-The input string str is encoded using the base64_encode function.
+The input string is encoded using the base64_encode function.
 
 ### 2. Insertion of Random Character
 If the length of the encoded string is even, a random character between ASCII values 33 ('!') and 126 ('~') is inserted at the middle position. If the length is odd, the random character is inserted at the beginning.
